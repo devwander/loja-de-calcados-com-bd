@@ -6,16 +6,12 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-    public static void main(String[] args) {
-
-    }
-
     public Connection iniciar()  throws ClassNotFoundException {
         Connection conexao = null;
 
-        String url = "jdbc:postgresql://localhost/loja-calcados";
+        String url = "jdbc:postgresql://localhost:5433/loja-de-calcados";
         String user = "postgres";
-        String password = "postgres";
+        String password = "1234567";
 
         try {
             Class.forName("org.postgresql.Driver");
