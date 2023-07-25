@@ -1,32 +1,22 @@
 package com.upe.classes;
 
 public class Calcado {
-    private int calcadoId;
     private String marca;
     private String tipo;
     private String cor;
     private String tamanho;
-    private int quantidade;
-    private boolean status;
+    private int estoque;
+    private boolean disponibilidade;
     private float preco;
 
-    public Calcado(int calcadoId, String marca, String tipo, String cor, String tamanho, int quantidade, boolean status, float preco) {
-        this.calcadoId = calcadoId;
+    public Calcado(String marca, String tipo, String cor, String tamanho, int estoque, boolean status, float preco) {
         this.marca = marca;
         this.tipo = tipo;
         this.cor = cor;
         this.tamanho = tamanho;
-        this.quantidade = quantidade;
-        this.status = status;
+        this.estoque = estoque;
+        this.disponibilidade = status;
         this.preco = preco;
-    }
-
-    public int getCalcadoId() {
-        return calcadoId;
-    }
-
-    public void setCalcadoId(int calcadoId) {
-        this.calcadoId = calcadoId;
     }
 
     public String getMarca() {
@@ -61,20 +51,20 @@ public class Calcado {
         this.tamanho = tamanho;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getEstoque() {
+        return estoque;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isDisponibilidade() {
+        return disponibilidade;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setDisponibilidade(boolean disponibilidade) {
+        this.disponibilidade = disponibilidade;
     }
 
     public float getPreco() {
@@ -86,6 +76,6 @@ public class Calcado {
     }
 
     public void detalhes() {
-        System.out.println("Calcado {" + "\n" + "calcadoId=" + calcadoId + "\n" + "marca=" + marca + "\n" + "tipo=" + tipo + "\n" + "cor=" + cor + "\n" + "tamanho=" + tamanho + "\n" + "quantidade=" + quantidade + "\n" + "status=" + status + "\n" + "preco=" + preco + '}');
+        System.out.println("Calcado {" + "\n" + "marca=" + marca + "\n" + "tipo=" + tipo + "\n" + "cor=" + cor + "\n" + "tamanho=" + tamanho + "\n" + "quantidade=" + estoque + "\n" + "disponibilidade=" + disponibilidade + "\n" + "preco=" + preco + '}');
     }
 }

@@ -1,7 +1,9 @@
 package com.upe;
 
+import com.upe.classes.Calcado;
 import com.upe.classes.Cliente;
 import com.upe.classes.Vendedor;
+import com.upe.classesDAO.CalcadoDAO;
 import com.upe.classesDAO.ClienteDAO;
 import com.upe.classesDAO.VendedorDAO;
 
@@ -21,6 +23,7 @@ public class Main {
             System.out.println("\n------- Menu Loja de Calcados -------");
             System.out.println("1 - Menu de clientes.");
             System.out.println("2 - Menu de vendedores");
+            System.out.println("3 - Menu de calçados");
             System.out.println("5 - Encerrar programa.");
 
             select = scanner.nextInt();
@@ -35,6 +38,12 @@ public class Main {
                     System.out.println("Entrando no menu de vendedores...");
                     VendedorDAO sellerManager = new VendedorDAO();
                     menuVendedores(sellerManager);
+                    break;
+                case 3:
+                    System.out.println("Entrando no menu de calçados...");
+                    CalcadoDAO shoeManager = new CalcadoDAO();
+                    menuCalcados(shoeManager);
+                    break;
                 case 5:
                     break;
             }
@@ -155,5 +164,80 @@ public class Main {
         float salario = Float.parseFloat(salarioString);
 
         return new Vendedor(nome, idade, cpf, sexo, salario);
+    }
+
+    public static void menuCalcados(CalcadoDAO shoeManager) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        int select = -1;
+
+        while (select != 6) {
+            System.out.println("\n------- Menu Loja de Calcados (Gerência de calçados) -------");
+            System.out.println("1 - Cadastrar calçado.");
+            System.out.println("2 - Buscar calçado.");
+            System.out.println("3 - Buscar todos os calçados.");
+            System.out.println("4 - Atualizar calçado.");
+            System.out.println("5 - Excluir calçado.");
+            System.out.println("6 - Encerrar menu calçados.");
+
+            select = scanner.nextInt();
+
+            switch (select) {
+                case 1:
+                    shoeManager.incluir(captaDadosCalcado());
+                    break;
+                case 2:
+                    shoeManager.consultar(captaId());
+                    break;
+                case 3:
+                    shoeManager.consultarTodos();
+                    break;
+                case 4:
+                    shoeManager.atualizar(captaId(), captaDadosCalcado());
+                    break;
+                case 5:
+                    shoeManager.deletar(captaId());
+                case 6:
+                    break;
+            }
+        }
+    }
+
+    public static Calcado captaDadosCalcado() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insira os dados do calçado a seguir:");
+
+        System.out.print("Marca: ");
+        String marca = scanner.nextLine();
+
+        System.out.print("Tipo: ");
+        String tipo = scanner.nextLine();
+
+        System.out.print("Tamanho: ");
+        String tamanho = scanner.nextLine();
+
+        System.out.print("Estoque: ");
+        String estoqueString = scanner.nextLine();
+        int estoque = Integer.parseInt(estoqueString);
+
+        System.out.print("Disponibilidade: ");
+        String disponibilidadeString = scanner.nextLine();
+        boolean disponibilidade = Boolean.parseBoolean(disponibilidadeString);
+
+        System.out.print("Preço: ");
+        String precoString = scanner.nextLine();
+        float preco = Float.parseFloat(precoString);
+
+        System.out.print("Cor: ");
+        String cor = scanner.nextLine();
+
+        return new Calcado(marca, tipo, cor, tamanho, estoque, disponibilidade, preco);
+    }
+
+    public static int captaId() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insira o id do calçado: ");
+
+        String idString = scanner.nextLine();
+        return Integer.parseInt(idString);
     }
 }

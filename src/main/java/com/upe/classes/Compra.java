@@ -53,10 +53,10 @@ public class Compra implements Venda {
     @Override
     public void adicionarCalcado(Calcado cal) {
         if (this.status == "Em aberto") {
-            if (cal.getQuantidade() > 0) {
+            if (cal.getEstoque() > 0) {
                 System.out.println("Calcado adicionado com sucesso!");
                 this.total = this.total + cal.getPreco();
-                cal.setQuantidade(cal.getQuantidade() - 1);
+                cal.setEstoque(cal.getEstoque() - 1);
                 this.carrinho.add(cal);
             } else {
                 System.out.println("Não há estoque deste calcado!");
@@ -71,7 +71,7 @@ public class Compra implements Venda {
         if (this.status == "Em aberto") {
             System.out.println("Calcado removido com sucesso!");
             this.total = this.total - cal.getPreco();
-            cal.setQuantidade(cal.getQuantidade() + 1);
+            cal.setEstoque(cal.getEstoque() + 1);
             this.carrinho.remove(cal);
         } else {
             System.out.println("Não é possível alterar uma compra que já foi concluída ou cancelada!");
