@@ -258,13 +258,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int select = -1;
 
-        while (select != 5) {
+        while (select != 3) {
             System.out.println("\n------- Menu Loja de Calcados (Gerência de compras) -------");
             System.out.println("1 - Criar nova compra.");
             System.out.println("2 - Buscar compra.");
-            System.out.println("3 - Cancelar compra.");
-            System.out.println("4 - Concluir compra.");
-            System.out.println("5 - Encerrar menu compras.");
+            System.out.println("3 - Encerrar menu compras.");
 
             select = scanner.nextInt();
 
@@ -272,18 +270,12 @@ public class Main {
                 case 1:
                     CompraCalcadoDAO compraCalcadoManager = new CompraCalcadoDAO();
                     int compra_id = buyManager.incluir(captaDadosCompra());
-                    adiministrarCompra(compra_id, compraCalcadoManager);
+                    adiministrarCompra(compra_id, compraCalcadoManager, buyManager);
                     break;
                 case 2:
-                    buyManager.consultar(captaIdCalcado());
+                    buyManager.consultar(captaIdCompra());
                     break;
                 case 3:
-                    buyManager.cancelarCompra(captaIdCompra());
-                    break;
-                case 4:
-                    buyManager.concluirCompra(captaIdCompra());
-                    break;
-                case 5:
                     break;
             }
         }
@@ -304,15 +296,17 @@ public class Main {
         return new Compra(vendedor_id, cliente_id);
     }
 
-    public static void adiministrarCompra(int compra_id, CompraCalcadoDAO compraCalcadoManager) throws SQLException {
+    public static void adiministrarCompra(int compra_id, CompraCalcadoDAO compraCalcadoManager, CompraDAO buyManager) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         int select = -1;
 
-        while (select != 6) {
+        while (select != 5) {
             System.out.println("\n------- Menu Gerência de compras -------");
             System.out.println("1 - Adicionar item.");
             System.out.println("2 - Remover item.");
-            System.out.println("6 - Sair.");
+            System.out.println("3 - Cancelar compra.");
+            System.out.println("4 - Concluir compra.");
+            System.out.println("5 - Sair.");
 
             select = scanner.nextInt();
 
@@ -323,7 +317,13 @@ public class Main {
                 case 2:
                     captaDadosItem(compra_id, compraCalcadoManager, "deletar");
                     break;
-                case 6:
+                case 3:
+                    buyManager.cancelarCompra(compra_id);
+                    break;
+                case 4:
+                    buyManager.concluirCompra(compra_id);
+                    break;
+                case 5:
                     break;
             }
         }

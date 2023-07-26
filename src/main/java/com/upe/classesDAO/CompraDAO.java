@@ -168,7 +168,7 @@ public class CompraDAO {
 
                 String queryValorTotal = "SELECT COMPRA_ID, SUM(CALCADOS.PRECO) AS TOTAL " +
                     "FROM COMPRA_CALCADOS INNER JOIN CALCADOS ON CALCADO_ID = CALCADOS.ID WHERE COMPRA_ID = "
-                        + compra_id + "GROUP BY COMPRA_ID";
+                        + compra_id + " GROUP BY COMPRA_ID";
 
                 ResultSet pegarValor = stm.executeQuery(queryValorTotal);
 

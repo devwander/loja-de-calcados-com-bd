@@ -9,9 +9,9 @@ public class Conexao {
     public Connection iniciar()  throws ClassNotFoundException {
         Connection conexao = null;
 
-        String url = "jdbc:postgresql://localhost:5433/loja-de-calcados";
+        String url = "jdbc:postgresql://localhost/loja-de-calcados";
         String user = "postgres";
-        String password = "1234567";
+        String password = "postgres";
 
         try {
             Class.forName("org.postgresql.Driver");
