@@ -65,8 +65,6 @@ public class ClienteDAO {
         try {
             con = new Conexao().iniciar();
 
-            ResultSet rs = con.createStatement().executeQuery(queryConsultar);
-
             Statement stm = con.createStatement();
             ResultSet result = stm.executeQuery(queryConsultar);
 

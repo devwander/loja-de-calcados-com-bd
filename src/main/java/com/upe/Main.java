@@ -2,10 +2,9 @@ package com.upe;
 
 import com.upe.classes.Calcado;
 import com.upe.classes.Cliente;
+import com.upe.classes.Compra;
 import com.upe.classes.Vendedor;
-import com.upe.classesDAO.CalcadoDAO;
-import com.upe.classesDAO.ClienteDAO;
-import com.upe.classesDAO.VendedorDAO;
+import com.upe.classesDAO.*;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -22,8 +21,9 @@ public class Main {
         while (select != 5) {
             System.out.println("\n------- Menu Loja de Calcados -------");
             System.out.println("1 - Menu de clientes.");
-            System.out.println("2 - Menu de vendedores");
-            System.out.println("3 - Menu de calçados");
+            System.out.println("2 - Menu de vendedores.");
+            System.out.println("3 - Menu de calçados.");
+            System.out.println("4 - Menu de compras.");
             System.out.println("5 - Encerrar programa.");
 
             select = scanner.nextInt();
@@ -43,6 +43,11 @@ public class Main {
                     System.out.println("Entrando no menu de calçados...");
                     CalcadoDAO shoeManager = new CalcadoDAO();
                     menuCalcados(shoeManager);
+                    break;
+                case 4:
+                    System.out.println("Entrando no menu de compras...");
+                    CompraDAO buyManager = new CompraDAO();
+                    menuCompra(buyManager);
                     break;
                 case 5:
                     break;
@@ -186,16 +191,16 @@ public class Main {
                     shoeManager.incluir(captaDadosCalcado());
                     break;
                 case 2:
-                    shoeManager.consultar(captaId());
+                    shoeManager.consultar(captaIdCalcado());
                     break;
                 case 3:
                     shoeManager.consultarTodos();
                     break;
                 case 4:
-                    shoeManager.atualizar(captaId(), captaDadosCalcado());
+                    shoeManager.atualizar(captaIdCalcado(), captaDadosCalcado());
                     break;
                 case 5:
-                    shoeManager.deletar(captaId());
+                    shoeManager.deletar(captaIdCalcado());
                 case 6:
                     break;
             }
@@ -233,11 +238,109 @@ public class Main {
         return new Calcado(marca, tipo, cor, tamanho, estoque, disponibilidade, preco);
     }
 
-    public static int captaId() {
+    public static int captaIdCalcado() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insira o id do calçado: ");
 
         String idString = scanner.nextLine();
         return Integer.parseInt(idString);
+    }
+
+    public static int captaIdCompra() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insira o id da Compra: ");
+
+        String idString = scanner.nextLine();
+        return Integer.parseInt(idString);
+    }
+
+    public static void menuCompra(CompraDAO buyManager) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        int select = -1;
+
+        while (select != 5) {
+            System.out.println("\n------- Menu Loja de Calcados (Gerência de compras) -------");
+            System.out.println("1 - Criar nova compra.");
+            System.out.println("2 - Buscar compra.");
+            System.out.println("3 - Cancelar compra.");
+            System.out.println("4 - Concluir compra.");
+            System.out.println("5 - Encerrar menu compras.");
+
+            select = scanner.nextInt();
+
+            switch (select) {
+                case 1:
+                    CompraCalcadoDAO compraCalcadoManager = new CompraCalcadoDAO();
+                    int compra_id = buyManager.incluir(captaDadosCompra());
+                    adiministrarCompra(compra_id, compraCalcadoManager);
+                    break;
+                case 2:
+                    buyManager.consultar(captaIdCalcado());
+                    break;
+                case 3:
+                    buyManager.cancelarCompra(captaIdCompra());
+                    break;
+                case 4:
+                    buyManager.concluirCompra(captaIdCompra());
+                    break;
+                case 5:
+                    break;
+            }
+        }
+    }
+
+    public static Compra captaDadosCompra() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insira os dados a seguir:");
+
+        System.out.print("Id do vendedor: ");
+        String idVendedorString = scanner.nextLine();
+        int vendedor_id = Integer.parseInt(idVendedorString);
+
+        System.out.print("Id do cliente: ");
+        String idClienteString = scanner.nextLine();
+        int cliente_id = Integer.parseInt(idClienteString);
+
+        return new Compra(vendedor_id, cliente_id);
+    }
+
+    public static void adiministrarCompra(int compra_id, CompraCalcadoDAO compraCalcadoManager) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        int select = -1;
+
+        while (select != 6) {
+            System.out.println("\n------- Menu Gerência de compras -------");
+            System.out.println("1 - Adicionar item.");
+            System.out.println("2 - Remover item.");
+            System.out.println("6 - Sair.");
+
+            select = scanner.nextInt();
+
+            switch (select) {
+                case 1:
+                    captaDadosItem(compra_id, compraCalcadoManager, "incluir");
+                    break;
+                case 2:
+                    captaDadosItem(compra_id, compraCalcadoManager, "deletar");
+                    break;
+                case 6:
+                    break;
+            }
+        }
+    }
+
+    public static void captaDadosItem(int compra_id, CompraCalcadoDAO compraCalcadoManager, String tipo) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insira os dados do item:");
+
+        System.out.print("Id do calcado: ");
+        String idCalcadoString = scanner.nextLine();
+        int calcado_id = Integer.parseInt(idCalcadoString);
+
+        if (tipo == "incluir") {
+            compraCalcadoManager.incluirItem(compra_id, calcado_id);
+        } else {
+            compraCalcadoManager.deletarItem(compra_id, calcado_id);
+        }
     }
 }
