@@ -2,7 +2,6 @@ package com.upe.classesDAO;
 
 import com.upe.Conexao;
 import com.upe.classes.Calcado;
-import com.upe.classes.Cliente;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

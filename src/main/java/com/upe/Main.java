@@ -275,7 +275,7 @@ public class Main {
                     adiministrarCompra(compra_id, compraCalcadoManager);
                     break;
                 case 2:
-                    buyManager.consultar(captaIdCalcado());
+                    buyManager.consultar(captaIdCompra());
                     break;
                 case 3:
                     buyManager.cancelarCompra(captaIdCompra());
@@ -308,11 +308,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int select = -1;
 
-        while (select != 6) {
+        while (select != 3) {
             System.out.println("\n------- Menu Gerência de compras -------");
             System.out.println("1 - Adicionar item.");
             System.out.println("2 - Remover item.");
-            System.out.println("6 - Sair.");
+            System.out.println("3 - Sair.");
 
             select = scanner.nextInt();
 
@@ -323,7 +323,7 @@ public class Main {
                 case 2:
                     captaDadosItem(compra_id, compraCalcadoManager, "deletar");
                     break;
-                case 6:
+                case 3:
                     break;
             }
         }
